@@ -2,9 +2,12 @@ import { Body, Controller, Delete, Get, HttpCode, Param, Post, Query } from '@ne
 import { Event } from '../../models/event';
 import { EventsController } from '../events.controller';
 import { EventsMockData } from '../../mock-data/event';
+import { EventsMockService } from '../../services/impl/events-mock.service';
 
 @Controller('events')
 export class EventsMockController implements EventsController {
+  constructor(private eventsService: EventsMockService) {}
+
   @Post()
   async createEvent(
     @Body('dateFrom') dateFrom: string,
