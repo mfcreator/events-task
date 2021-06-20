@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Query } from '@nestjs/common';
 import { Event } from '../../models/event';
 import { EventsController } from '../events.controller';
-import { EventsMockData } from '../../mock-data/event';
 import { EventsMockService } from '../../services/impl/events-mock.service';
 
 @Controller('events')
@@ -29,7 +28,6 @@ export class EventsMockController implements EventsController {
     @Query('offset') offset: number,
     @Query('limit') limit: number,
   ): Promise<{ totalCount: number; events: Event[] }> {
-    console.log(dateFrom, dateTo, offset, limit);
     return this.eventsService.getEvents(dateFrom, dateTo, offset, limit);
   }
 
