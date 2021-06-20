@@ -2,18 +2,17 @@ import { Body, Controller, Delete, Get, HttpCode, Param, Post, Query } from '@ne
 import { Event } from '../../models/event';
 import { EventsController } from '../events.controller';
 import { EventsMockService } from '../../services/impl/events-mock.service';
+import { createEvent } from '../../dtos/create-event.dto';
+import { getEvents } from '../../dtos/get-events.dto';
 
 @Controller('events')
 export class EventsMockController implements EventsController {
   constructor(private eventsService: EventsMockService) {}
 
   @Post()
-  async createEvent(
-    @Body('dateFrom') dateFrom: string,
-    @Body('dateTo') dateTo: string,
-    @Body('title') title: string,
-  ): Promise<Event> {
-    return this.eventsService.createEvent(dateFrom, dateTo, title);
+  async createEvent(@Body() event: createEvent): Promise<Event> {
+    const { title, dateFrom, dateTo } = event;
+    return this.eventsService.createEvent(title, dateFrom, dateTo);
   }
 
   @Get(':id')
@@ -22,13 +21,10 @@ export class EventsMockController implements EventsController {
   }
 
   @Get()
-  async getEvents(
-    @Query('dateFrom') dateFrom: string,
-    @Query('dateTo') dateTo: string,
-    @Query('offset') offset: number,
-    @Query('limit') limit: number,
-  ): Promise<{ totalCount: number; events: Event[] }> {
-    return this.eventsService.getEvents(dateFrom, dateTo, offset, limit);
+  async getEvents(@Query() searchParams: getEvents): Promise<{ totalCount: number; events: Event[] }> {
+    const { dateFrom, dateTo, limit, offset } = searchParams;
+    console.log(limit);
+    return this.eventsService.getEvents(dateFrom, dateTo, limit, offset);
   }
 
   @HttpCode(204)

@@ -4,6 +4,8 @@ import { EventsController } from '../events.controller';
 import { EventsMockService } from '../../services/impl/events-mock.service';
 import { EventsService } from '../../services/events.service';
 import { EventsMockData } from '../../mock-data/event';
+import { getEvents } from 'src/events/dtos/get-events.dto';
+import { createEvent } from 'src/events/dtos/create-event.dto';
 
 describe('EventsController', () => {
   let controller: EventsController;
@@ -30,13 +32,13 @@ describe('EventsController', () => {
     const [responseEvent] = EventsMockData;
     jest.spyOn(eventsService, 'createEvent').mockImplementation(() => Promise.resolve(responseEvent));
 
-    const newEvent = {
+    const newEvent: createEvent = {
       title: 'new event',
       dateFrom: new Date().toISOString(),
       dateTo: new Date().toISOString(),
     };
 
-    controller.createEvent(newEvent.dateFrom, newEvent.dateTo, newEvent.title);
+    controller.createEvent(newEvent);
     expect(eventsService.createEvent).toHaveBeenCalled();
   });
 
@@ -57,13 +59,13 @@ describe('EventsController', () => {
 
     jest.spyOn(eventsService, 'getEvents').mockImplementation(() => Promise.resolve({ totalCount: 0, events: [] }));
 
-    const searchParams = {
+    const searchParams: getEvents = {
       dateFrom: new Date().toISOString(),
       dateTo: new Date().toISOString(),
       limit: 0,
       offset: 0,
     };
-    controller.getEvents(searchParams.dateFrom, searchParams.dateTo, searchParams.offset, searchParams.limit);
+    controller.getEvents(searchParams);
     expect(eventsService.getEvents).toHaveBeenCalled();
   });
 

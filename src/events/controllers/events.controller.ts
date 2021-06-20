@@ -1,4 +1,6 @@
 import { Event } from '../models/event';
+import { createEvent } from '../dtos/create-event.dto';
+import { getEvents } from '../dtos/get-events.dto';
 
 export interface EventsController {
   /**
@@ -9,17 +11,12 @@ export interface EventsController {
   /**
    * Gets events from given period including pagination by offset and limit
    */
-  getEvents(
-    dateFrom: string,
-    dateTo: string,
-    offset: number,
-    limit: number,
-  ): Promise<{ totalCount: number; events: Event[] }>;
+  getEvents(searchParams: getEvents): Promise<{ totalCount: number; events: Event[] }>;
 
   /**
    * Creates event for given period
    */
-  createEvent(dateFrom: string, dateTo: string, title: string): Promise<Event>;
+  createEvent(event: createEvent): Promise<Event>;
 
   /**
    * Removes event from the mock-data source by the identifier
