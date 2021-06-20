@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { EventsOverlapError } from '../../errors/events-overlap.error';
 import { EventInvalidTimeError } from '../../errors/event-invalid-time.error';
 import { NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../../../prisma.service';
 
 describe('EventsMockService', () => {
   let eventsService: EventsService;
@@ -14,7 +15,7 @@ describe('EventsMockService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [EventsMockService, { provide: 'EVENTS_DATA', useValue: EventsMockData }],
+      providers: [EventsMockService, PrismaService],
     }).compile();
 
     eventsService = module.get<EventsMockService>(EventsMockService);

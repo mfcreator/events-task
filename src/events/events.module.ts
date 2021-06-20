@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { EventsMockController } from './controllers/impl/events-mock.controller';
 import { EventsMockService } from './services/impl/events-mock.service';
-import { EventsMockData } from './mock-data/event';
+import { PrismaService } from '../prisma.service';
 
 @Module({
   controllers: [EventsMockController],
-  providers: [EventsMockService, { provide: 'EVENTS_DATA', useValue: EventsMockData }],
+  providers: [EventsMockService, PrismaService],
 })
 export class EventsModule {}

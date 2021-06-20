@@ -11,8 +11,8 @@ export class EventsMockController implements EventsController {
 
   @Post()
   async createEvent(@Body() event: createEvent): Promise<Event> {
-    const { title, dateFrom, dateTo } = event;
-    return this.eventsService.createEvent(title, dateFrom, dateTo);
+    const { dateFrom, dateTo, title } = event;
+    return this.eventsService.createEvent(dateFrom, dateTo, title);
   }
 
   @Get(':id')
@@ -22,9 +22,8 @@ export class EventsMockController implements EventsController {
 
   @Get()
   async getEvents(@Query() searchParams: getEvents): Promise<{ totalCount: number; events: Event[] }> {
-    const { dateFrom, dateTo, limit, offset } = searchParams;
-    console.log(limit);
-    return this.eventsService.getEvents(dateFrom, dateTo, limit, offset);
+    const { dateFrom, dateTo, offset, limit } = searchParams;
+    return this.eventsService.getEvents(dateFrom, dateTo, offset, limit);
   }
 
   @HttpCode(204)

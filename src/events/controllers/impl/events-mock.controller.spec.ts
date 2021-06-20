@@ -4,8 +4,9 @@ import { EventsController } from '../events.controller';
 import { EventsMockService } from '../../services/impl/events-mock.service';
 import { EventsService } from '../../services/events.service';
 import { EventsMockData } from '../../mock-data/event';
-import { getEvents } from 'src/events/dtos/get-events.dto';
-import { createEvent } from 'src/events/dtos/create-event.dto';
+import { getEvents } from '../../dtos/get-events.dto';
+import { createEvent } from '../../dtos/create-event.dto';
+import { PrismaService } from '../../../prisma.service';
 
 describe('EventsController', () => {
   let controller: EventsController;
@@ -14,7 +15,7 @@ describe('EventsController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [EventsMockController],
-      providers: [EventsMockService, { provide: 'EVENTS_DATA', useValue: EventsMockData }],
+      providers: [EventsMockService, PrismaService],
     }).compile();
 
     controller = module.get<EventsMockController>(EventsMockController);

@@ -1,11 +1,12 @@
-import { IsDateString, IsDefined, IsInt, IsOptional } from 'class-validator';
+import { IsDateString, IsDefined, IsInt, IsOptional, Min } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class getEvents {
   @IsOptional()
   @Type(() => Number)
   @IsInt()
-  offset: number;
+  @Min(0)
+  offset = 0;
 
   @IsDefined()
   @IsDateString()
