@@ -14,34 +14,28 @@ export class EventsMockController implements EventsController {
     @Body('dateTo') dateTo: string,
     @Body('title') title: string,
   ): Promise<Event> {
-    console.log(dateFrom, dateTo, title);
-    return EventsMockData[0]; // todo: implement method
+    return this.eventsService.createEvent(dateFrom, dateTo, title);
   }
 
   @Get(':id')
   async getEvent(@Param('id') id: string): Promise<Event> {
-    console.log(id);
-    return EventsMockData[0]; // todo: implement method
+    return this.eventsService.getEvent(id);
   }
 
   @Get()
-  getEvents(
+  async getEvents(
     @Query('dateFrom') dateFrom: string,
     @Query('dateTo') dateTo: string,
     @Query('offset') offset: number,
     @Query('limit') limit: number,
   ): Promise<{ totalCount: number; events: Event[] }> {
     console.log(dateFrom, dateTo, offset, limit);
-    return Promise.resolve({
-      totalCount: EventsMockData.length,
-      events: EventsMockData,
-    }); // todo: implement method
+    return this.eventsService.getEvents(dateFrom, dateTo, offset, limit);
   }
 
   @HttpCode(204)
   @Delete(':id')
   async removeEvent(@Param('id') id: string): Promise<void> {
-    console.log(id);
-    // todo: implement method
+    return this.eventsService.removeEvent(id);
   }
 }
