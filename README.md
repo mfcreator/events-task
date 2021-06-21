@@ -48,3 +48,13 @@ This challenge checks your knowledge in the following areas:
 - Understanding Git and general commits conventions;
 - Writing Unit Tests.
 
+### Local development
+
+After cloning project please execute following commands:
+- cp .env.example .env
+- npm -i
+- docker-compose up -d
+- docker-compose exec main npx prisma migrate dev
+
+Production image can be created with command
+- docker-compose -f docker-compose.prod.yml up -d
